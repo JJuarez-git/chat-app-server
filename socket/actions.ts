@@ -15,8 +15,8 @@ export const disconnect = (client: Socket) => {
 }
 
 export const configUser = (client: Socket) => {
-    client.on('config-user', (payload: { username: string }) => {
-        usersList.configUser(client.id, payload.username)
+    client.on('config-user', (payload: { email:string, username: string }) => {
+        usersList.configUser(client.id, payload.email, payload.username)
     })
 }
 

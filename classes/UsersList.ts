@@ -28,9 +28,10 @@ export default class UsersList {
         this._list = this.list.filter(user => user.id !== id)
     }
 
-    public configUser(id: string, username: string) {
+    public configUser(id: string, email: string, username: string) {
         const user = this.getUser(id)
-        if (user !== undefined) {
+        if (user) {
+            user.email = email
             user.username = username
         }
         console.log("***** CONFIG USER *****");
