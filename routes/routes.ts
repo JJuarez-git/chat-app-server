@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import { Router, Request, Response } from "express";
 import jwt from 'jsonwebtoken'
 import User from '../classes/User';
+import { getAllTalks } from '../repositories/TalksRepository';
 
 const router = Router()
 dotenv.config()
@@ -22,6 +23,12 @@ router.get('/', (req: Request, res: Response) => {
     res.status(200).json({
         message: 'API - Chat App'
     })
+})
+
+router.get('/databases', async (req: Request, res: Response) => {
+    const result = await getAllTalks()
+    /* console.log(result); */
+    res.json({ databases: result })
 })
 
 router.post('/auth', (req: Request, res: Response) => {

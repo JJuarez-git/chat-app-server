@@ -1,11 +1,13 @@
 import express from 'express'
-import GLOBALS from '../global/env'
 import socketIO from 'socket.io'
 import http from 'http'
 import morgan from 'morgan'
 import cors from 'cors'
 import * as actions from '../socket/actions'
 import router from '../routes/routes'
+import mongoose from 'mongoose'
+import mongoConnectToDatabase from '../config/mongo'
+require('dotenv').config()
 
 export default class WebSocketServer {
 
@@ -18,7 +20,7 @@ export default class WebSocketServer {
 
     private constructor() {
         this.app = express()
-        this.port = GLOBALS.SERVER_PORT
+        this.port = process.env.SERVER_PORT as unknown as number
         this.httpServer = new http.Server(this.app)
         this.io = require('socket.io')(this.httpServer, {
             cors: { credentials: true, }
@@ -26,6 +28,7 @@ export default class WebSocketServer {
         this.config()
         this.routes()
         this.socketActions()
+        mongoConnectToDatabase()
     }
 
     public static get instance() {
